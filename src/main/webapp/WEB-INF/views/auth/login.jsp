@@ -1,22 +1,23 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Pahana Edu Billing System - Login</title>
-</head>
-<body>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ include file="/WEB-INF/views/shared/header.jspf" %>
+
 <h2>Login</h2>
-<form action="${pageContext.request.contextPath}/login" method="post">
-    <label>Username:</label>
-    <input type="text" name="username" required /><br/>
 
-    <label>Password:</label>
-    <input type="password" name="password" required /><br/>
-
-    <input type="submit" value="Login"/>
+<form action="${pageContext.request.contextPath}/login" method="post" autocomplete="off">
+    <label>Username</label><br/>
+    <input type="text" name="username" required/><br/><br/>
+    <label>Password</label><br/>
+    <input type="password" name="password" required/><br/><br/>
+    <button type="submit">Login</button>
 </form>
 
-<p style="color:red;">
-    ${requestScope.errorMessage}
-</p>
-</body>
-</html>
+<%
+    String err = (String) request.getAttribute("errorMessage");
+    if (err != null) {
+%>
+<p class="error"><%= err %></p>
+<%
+    }
+%>
+
+<%@ include file="/WEB-INF/views/shared/footer.jspf" %>

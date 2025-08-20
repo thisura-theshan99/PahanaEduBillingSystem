@@ -1,0 +1,54 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%
+    com.pahana.edu.billing.model.User _user =
+            (com.pahana.edu.billing.model.User) session.getAttribute("user");
+    boolean _loggedIn = (_user != null);
+    String _uri = request.getRequestURI(); // current request path
+%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Pahana Edu Billing System</title>
+    <style>
+        body{font-family:Arial, sans-serif; margin:24px;}
+        .topbar{display:flex; align-items:center; justify-content:space-between;}
+        .brand a{font-weight:bold; text-decoration:none; color:#000;}
+        .nav a{margin-right:12px; text-decoration:none;}
+        .right a{margin-left:12px; text-decoration:none;}
+        table{border-collapse:collapse; width:100%;}
+        th,td{border:1px solid #ddd; padding:8px;}
+        th{background:#f3f3f3; text-align:left;}
+        .actions a{margin-right:8px;}
+        .error{color:#c00;}
+        .ok{color:#090;}
+    </style>
+</head>
+<body>
+<div class="topbar">
+    <div class="brand">
+        <a href="<%= request.getContextPath() %>/">Pahana Edu Billing</a>
+    </div>
+
+    <div class="nav">
+        <% if (_loggedIn) { %>
+        <a href="<%= request.getContextPath() %>/bills?action=new">Generate Bill</a>
+        <a href="<%= request.getContextPath() %>/bills?action=view">View Bills</a>
+        <a href="<%= request.getContextPath() %>/customers?action=list">Customers</a>
+        <a href="<%= request.getContextPath() %>/items?action=list">Items</a>
+        <a href="<%= request.getContextPath() %>/reports?action=monthly">Reports</a>
+        <% } %>
+    </div>
+
+    <div class="right">
+        <% if (_loggedIn) { %>
+        <span>Hi, <strong><%= _user.getUsername() %></strong></span>
+        <a href="<%= request.getContextPath() %>/logout">Logout</a>
+        <% } else if (!_uri.contains("/login")) { %>
+        <!-- Show login button ONLY if NOT on the login page -->
+        <a href="<%= request.getContextPath() %>/login"
+           style="border:1px solid #333; padding:6px 10px;">Login</a>
+        <% } %>
+    </div>
+</div>
+<hr/>

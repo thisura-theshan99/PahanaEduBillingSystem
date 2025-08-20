@@ -36,6 +36,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- ✅ MySQL JDBC Driver -->
         <dependency>
             <groupId>mysql</groupId>
@@ -43,6 +51,12 @@
             <version>8.0.33</version>
         </dependency>
     </dependencies>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
 
     <build>
         <finalName>PahanaEduBillingSystem</finalName>

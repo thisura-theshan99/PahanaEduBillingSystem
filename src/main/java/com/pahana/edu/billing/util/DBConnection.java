@@ -6,37 +6,39 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/pahanaedu_billing?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    private static final String USER = "pahana_user";   // your MySQL user
-    private static final String PASSWORD = "ChangeMe_123!"; // your MySQL password
+    // ✅ Update USER/PASSWORD to match your MySQL credentials
+    private static final String URL =
+            "jdbc:mysql://localhost:3306/pahanaedu_billing?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
 
-    private static Connection connection = null;
+    // Single shared connection (simple for assignments)
+    private static Connection connection;
 
-    // Private constructor (Singleton pattern)
     private DBConnection() { }
 
-    // Return a single shared connection
-    public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            try {
-                // Load driver (modern JDBC auto-loads, but explicit is safer)
+    public static synchronized Connection getConnection() throws SQLException {
+        try {
+            if (connection == null || connection.isClosed()) {
+                // Explicit load (modern JDBC auto-loads, but this is safe)
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            } catch (ClassNotFoundException e) {
-                throw new SQLException("MySQL Driver not found!", e);
+                // Optional: set sane defaults
+                connection.setAutoCommit(true);
             }
+            return connection;
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("MySQL Driver not found (com.mysql.cj.jdbc.Driver). Add mysql-connector-java to pom.xml.", e);
         }
-        return connection;
     }
 
-    // Utility method to close connection
-    public static void closeConnection() {
+    public static synchronized void closeConnection() {
         if (connection != null) {
             try {
                 connection.close();
+            } catch (SQLException ignored) { }
+            finally {
                 connection = null;
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
     }

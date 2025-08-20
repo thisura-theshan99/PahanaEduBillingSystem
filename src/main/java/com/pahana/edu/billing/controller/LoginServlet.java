@@ -12,17 +12,18 @@ public class LoginServlet extends HttpServlet {
     private UserDAO userDAO;
 
     @Override
-    public void init() { userDAO = new UserDAO(); }
+    public void init() {
+        userDAO = new UserDAO();
+    }
 
-    // Show login page on GET
+    // Show login page
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp")
-                .forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
     }
 
-    // Handle login on POST
+    // Handle login
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,17 +37,14 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
 
-            String target = user.isAdmin()
+            String target = user.getRole() != null && user.getRole().equalsIgnoreCase("ADMIN")
                     ? "/WEB-INF/views/admin/dashboard.jsp"
                     : "/WEB-INF/views/staff/dashboard.jsp";
 
-            // Forward to a JSP under WEB-INF (cannot be accessed via redirect)
             request.getRequestDispatcher(target).forward(request, response);
-
         } else {
             request.setAttribute("errorMessage", "Invalid username or password!");
-            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp")
-                    .forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
         }
     }
 }

@@ -1,0 +1,6 @@
+<hr/>
+<footer>
+    <small>&copy; <%= java.time.Year.now() %> Pahana Edu</small>
+</footer>
+</body>
+</html>

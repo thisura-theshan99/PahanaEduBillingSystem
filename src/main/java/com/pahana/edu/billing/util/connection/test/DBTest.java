@@ -1,19 +1,16 @@
-package com.pahana.edu.billing.util.connection.test;
-
-import com.pahana.edu.billing.util.DBConnection;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import com.pahana.edu.billing.util.DBConnection;
 
 public class DBTest {
     public static void main(String[] args) {
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT NOW() AS db_time")) {
+             ResultSet rs = stmt.executeQuery("SELECT id, username, role FROM users")) {
 
-            if (rs.next()) {
-                System.out.println("✅ Database connected. Current time: " + rs.getString("db_time"));
+            while (rs.next()) {
+                System.out.println("User: " + rs.getString("username") + " | Role: " + rs.getString("role"));
             }
         } catch (Exception e) {
             e.printStackTrace();
