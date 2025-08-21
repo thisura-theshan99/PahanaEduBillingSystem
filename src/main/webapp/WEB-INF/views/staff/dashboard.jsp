@@ -1,45 +1,37 @@
 <%@ page import="com.pahana.edu.billing.model.User" %>
-<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%
-    // ✅ Guard: only logged-in users can view dashboard
     User user = (User) session.getAttribute("user");
-    if (user == null) {
-        response.sendRedirect(request.getContextPath() + "/login");
-        return;
-    }
+    if (user == null) { response.sendRedirect(request.getContextPath()+"/login"); return; }
+    if (!"STAFF".equalsIgnoreCase(user.getRole())) { response.sendRedirect(request.getContextPath()+"/"); return; }
 %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Pahana Edu — Dashboard</title>
-    <meta charset="UTF-8">
-</head>
-<body>
+<%@ include file="../shared/header.jspf" %>
 
-<h2>Welcome, <%= user.getUsername() %> (Role: <%= user.getRole() %>)</h2>
-<hr/>
+<style>
+    /* center the actions row (same as admin) */
+    .actions-center{
+        display:flex;
+        justify-content:center;
+        gap:12px;
+        flex-wrap:wrap;
+        margin-top:16px;
+    }
+</style>
 
-<h3>Quick Actions</h3>
-<ul>
-    <li><a href="<%= request.getContextPath() %>/bills?action=new">Generate Bill</a></li>
-    <li><a href="<%= request.getContextPath() %>/bills?action=view">View Bills</a></li>
-    <li><a href="<%= request.getContextPath() %>/reports?action=monthly">Monthly Report</a></li>
-</ul>
+<div class="section">
+    <h2 style="margin:0; text-align:center;">Staff Dashboard</h2>
 
-<% if ("ADMIN".equalsIgnoreCase(user.getRole())) { %>
-<h3>Admin Actions</h3>
-<ul>
-    <li><a href="<%= request.getContextPath() %>/customers?action=list">Manage Customers</a></li>
-    <li><a href="<%= request.getContextPath() %>/customers?action=new">Add Customer</a></li>
-    <li><a href="<%= request.getContextPath() %>/items?action=list">Manage Items</a></li>
-    <li><a href="<%= request.getContextPath() %>/items?action=new">Add Item</a></li>
-    <li><a href="<%= request.getContextPath() %>/reports?action=topCustomers">Top Customers</a></li>
-</ul>
-<% } %>
+    <div class="actions-center">
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/bills?action=new">
+            Generate Bill
+        </a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/bills?action=view">
+            View Bills
+        </a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/reports?action=monthly">
+            Monthly Report
+        </a>
+    </div>
+</div>
 
-<p style="margin-top:20px;">
-    <a href="<%= request.getContextPath() %>/logout">Logout</a>
-</p>
-
-</body>
-</html>
+<%@ include file="../shared/footer.jspf" %>

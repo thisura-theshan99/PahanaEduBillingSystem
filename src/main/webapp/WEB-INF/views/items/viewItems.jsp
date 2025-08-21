@@ -1,13 +1,22 @@
 <%@ page import="java.util.*,com.pahana.edu.billing.model.Item" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/shared/header.jspf" %>
-<h2>Items</h2>
 
-<% String saved = request.getParameter("saved");
-    if ("1".equals(saved)) { %>
-<p class="ok">Saved successfully.</p>
-<% } %>
+<!-- Title + Add button -->
+<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+    <h2 style="margin:0;">Items</h2>
+    <a class="btn btn-primary"
+       href="${pageContext.request.contextPath}/items?action=new">Add New Item</a>
+</div>
 
+<%
+    String saved   = request.getParameter("saved");
+    String updated = request.getParameter("updated");
+    String deleted = request.getParameter("deleted");
+    if ("1".equals(saved))   { %><p class="ok">Saved successfully.</p><% }
+    if ("1".equals(updated)) { %><p class="ok">Updated successfully.</p><% }
+    if ("1".equals(deleted)) { %><p class="ok">Deleted successfully.</p><% }
+%>
 
 <form method="get" action="${pageContext.request.contextPath}/items" style="margin:10px 0;">
     <input type="hidden" name="action" value="list"/>
@@ -24,7 +33,14 @@
 </form>
 
 <table>
-    <tr><th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Active</th><th>Actions</th></tr>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Active</th>
+        <th>Actions</th>
+    </tr>
     <%
         List<Item> items = (List<Item>) request.getAttribute("items");
         if (items != null) {
@@ -46,4 +62,5 @@
         }
     %>
 </table>
+
 <%@ include file="/WEB-INF/views/shared/footer.jspf" %>

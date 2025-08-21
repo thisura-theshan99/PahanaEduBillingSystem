@@ -9,13 +9,21 @@
 <form action="${pageContext.request.contextPath}/bills" method="post">
     <input type="hidden" name="action" value="create"/>
 
+    <form method="post" action="${pageContext.request.contextPath}/bills">
+        <input type="hidden" name="action" value="create"/>
+
     <label>Customer ID</label><br/>
     <input type="number" name="customerId" min="1" required/><br/><br/>
 
     <label>Discount (%)</label><br/>
     <input type="number" name="discountPercent" min="0" max="100" step="0.01" value="0"/><br/><br/>
 
+        <div class="table-toolbar">
+            <button type="submit" class="btn btn-primary">Generate Bill</button>
+        </div>
+
     <h3>Items</h3>
+
     <table>
         <tr><th>Select</th><th>Item</th><th>Price</th><th>Quantity</th></tr>
         <%
@@ -35,6 +43,5 @@
         %>
     </table>
     <br/>
-    <button type="submit">Create Bill</button>
 </form>
 <%@ include file="/WEB-INF/views/shared/footer.jspf" %>

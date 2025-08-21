@@ -1,18 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/shared/header.jspf" %>
 
-<h1>Welcome to Pahana Edu Billing System</h1>
-<p style="max-width:700px;">
-    Please log in to continue.
-</p>
+<style>
+    .welcome-center { text-align:center; margin: 48px auto; max-width: 720px; }
+</style>
 
-<%-- If user already logged in, show dashboard link instead --%>
-<%
-    com.pahana.edu.billing.model.User u =
-            (com.pahana.edu.billing.model.User) session.getAttribute("user");
-    if (u != null) {
-%>
-<p><a href="<%= request.getContextPath() %>/bills?action=new">Go to Dashboard</a></p>
-<% } %>
+<div class="welcome-center">
+    <h1>Welcome to Pahana Edu Billing System</h1>
+    <p>Please log in to continue.</p>
+</div>
 
 <%@ include file="/WEB-INF/views/shared/footer.jspf" %>

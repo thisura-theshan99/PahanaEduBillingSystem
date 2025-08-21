@@ -1,0 +1,169 @@
+/* Print Styles for Invoices */
+@page {
+    margin: 14mm;
+    size: A4;
+}
+
+@media print {
+    * {
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    body {
+        color: #000 !important;
+        background: #fff !important;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    /* Hide non-printable elements */
+    .no-print,
+    .topbar,
+    .btn,
+    button,
+    .nav,
+    .alert {
+        display: none !important;
+    }
+
+    /* Invoice header */
+    .invoice-header {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #000;
+    }
+
+    .invoice-header h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #000;
+    }
+
+    /* Company details */
+    .company-details {
+        margin-bottom: 15px;
+    }
+
+    .company-details h2 {
+        margin: 0 0 5px 0;
+        font-size: 18px;
+        color: #000;
+    }
+
+    /* Invoice details */
+    .invoice-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .bill-to,
+    .invoice-info {
+        width: 48%;
+    }
+
+    .bill-to h3,
+    .invoice-info h3 {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        color: #000;
+        text-transform: uppercase;
+        border-bottom: 1px solid #333;
+        padding-bottom: 3px;
+    }
+
+    /* Table styles */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
+
+    .table th {
+        background: #f0f0f0 !important;
+        color: #000 !important;
+        border: 1px solid #333 !important;
+        padding: 8px 6px !important;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .table td {
+        border: 1px solid #333 !important;
+        padding: 6px !important;
+        font-size: 11px;
+        vertical-align: top;
+    }
+
+    .table tbody tr:hover {
+        background: transparent !important;
+    }
+
+    /* Totals section */
+    .totals-section {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    .totals-table {
+        display: inline-block;
+        min-width: 300px;
+    }
+
+    .total-row {
+        font-weight: bold;
+        font-size: 13px;
+    }
+
+    /* Footer */
+    .invoice-footer {
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #333;
+        font-size: 10px;
+        text-align: center;
+    }
+
+    /* Page breaks */
+    .page-break {
+        page-break-before: always;
+    }
+
+    .avoid-break {
+        page-break-inside: avoid;
+    }
+
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+        margin: 8px 0 6px 0;
+        color: #000;
+    }
+
+    /* Remove shadows and rounded corners */
+    * {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+
+    /* Ensure text is black */
+    p, div, span, td, th {
+        color: #000 !important;
+    }
+
+    /* Terms and conditions */
+    .terms {
+        margin-top: 20px;
+        font-size: 10px;
+        line-height: 1.3;
+    }
+
+    .terms h4 {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+}
